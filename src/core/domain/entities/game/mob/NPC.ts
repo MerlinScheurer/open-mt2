@@ -2,13 +2,13 @@ import { Mob, MobParams } from './Mob';
 import { EntityTypeEnum } from '@/core/enum/EntityTypeEnum';
 
 export default class NPC extends Mob {
-    constructor(params: Omit<MobParams, 'virtualId' | 'entityType'>, { animationManager }) {
+    constructor(params: Omit<MobParams, 'virtualId' | 'entityType'>, { animationManager, questManager }) {
         super(
             {
                 ...params,
                 entityType: EntityTypeEnum.NPC,
             },
-            { animationManager },
+            { animationManager, questManager },
         );
     }
 
@@ -26,7 +26,7 @@ export default class NPC extends Mob {
         throw new Error('Method not implemented.');
     }
     getHealthPercentage(): number {
-        throw new Error('Method not implemented.');
+        return 100;
     }
     getAttack(): number {
         throw new Error('Method not implemented.');

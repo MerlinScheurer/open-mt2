@@ -16,6 +16,7 @@ import AnimationManager from './AnimationManager';
 import DropManager from './DropManager';
 import ExperienceManager from './ExperienceManager';
 import Logger from '@/core/infra/logger/Logger';
+import { QuestManager } from '../quests/QuestManager';
 
 // const MobRankEnum = {
 //     PAWN: 0,
@@ -100,13 +101,15 @@ export default class MobManager {
     private readonly dropManager: DropManager;
     private readonly experienceManager: ExperienceManager;
     private readonly logger: Logger;
+    private readonly questManager: QuestManager;
 
-    constructor({ config, animationManager, dropManager, experienceManager, logger }) {
+    constructor({ config, animationManager, dropManager, experienceManager, logger, questManager }) {
         this.config = config;
         this.animationManager = animationManager;
         this.dropManager = dropManager;
         this.experienceManager = experienceManager;
         this.logger = logger;
+        this.questManager = questManager;
     }
 
     load() {
@@ -137,6 +140,7 @@ export default class MobManager {
                         dropManager: this.dropManager,
                         experienceManager: this.experienceManager,
                         logger: this.logger,
+                        questManager: this.questManager,
                     },
                 );
             }
@@ -150,6 +154,7 @@ export default class MobManager {
                     },
                     {
                         animationManager: this.animationManager,
+                        questManager: this.questManager,
                     },
                 );
             }
@@ -163,6 +168,7 @@ export default class MobManager {
                     },
                     {
                         animationManager: this.animationManager,
+                        questManager: this.questManager,
                     },
                 );
             }

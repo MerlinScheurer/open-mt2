@@ -6,6 +6,7 @@ import JobUtil from '@/core/domain/util/JobUtil';
 import EmpireUtil from '@/core/domain/util/EmpireUtil';
 import Player from '../entities/game/player/Player';
 import SaveCharacterService from '@/game/domain/service/SaveCharacterService';
+import { QuestManager } from '../quests/QuestManager';
 
 type PlayerFactoryParams = {
     playerClass: number;
@@ -42,13 +43,15 @@ export default class PlayerFactory {
     private readonly experienceManager: ExperienceManager;
     private readonly logger: Logger;
     private readonly saveCharacterService: SaveCharacterService;
+    private readonly questManager: QuestManager;
 
-    constructor({ config, animationManager, experienceManager, logger, saveCharacterService }) {
+    constructor({ config, animationManager, experienceManager, logger, saveCharacterService, questManager }) {
         this.config = config;
         this.animationManager = animationManager;
         this.experienceManager = experienceManager;
         this.logger = logger;
         this.saveCharacterService = saveCharacterService;
+        this.questManager = questManager;
     }
 
     create({
@@ -129,6 +132,7 @@ export default class PlayerFactory {
                 experienceManager: this.experienceManager,
                 logger: this.logger,
                 saveCharacterService: this.saveCharacterService,
+                questManager: this.questManager,
             },
         );
     }

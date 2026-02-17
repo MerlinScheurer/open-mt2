@@ -21,6 +21,10 @@ export default class BitFlag {
         this.flag ^= value;
     }
 
+    reset() {
+        this.flag = 0;
+    }
+
     getFlag() {
         return this.flag;
     }

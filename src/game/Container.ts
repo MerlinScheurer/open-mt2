@@ -35,6 +35,7 @@ import { makeGameConfig } from './infra/config/GameConfig';
 import WinstonLoggerAdapter from '@/core/infra/logger/WinstonLoggerAdapter';
 import RedisCacheProvider from '@/core/infra/cache/RedisCacheProvider';
 import { PrivilegeManager } from '@/core/domain/manager/PrivilegeManager';
+import { QuestManager } from '@/core/domain/quests/QuestManager';
 
 const container = createContainer();
 
@@ -76,6 +77,7 @@ container.register({
     characterUpdateTargetService: asClass(CharacterUpdateTargetService).singleton(),
     dropManager: asClass(DropManager).singleton(),
     privilegeManager: asClass(PrivilegeManager).singleton(),
+    questManager: asClass(QuestManager).singleton(),
 });
 
 export { container };

@@ -72,9 +72,13 @@ Metin2 are copyrighted by [Webzen](http://webzen.com/ "Webzen").
 
 - Follow this [**guide**](docs/guide.md)
 
-## Documentation
+## Packets
 
-- See the packet [**documentation**](docs/packets.md) (work in progress)
+- Read the packet [**documentation**](docs/packets.md) (work in progress)
+  
+## Questing
+
+- Read the questing [**documentation**](docs/quests.md) (work in progress)
 
 ## Commands
 

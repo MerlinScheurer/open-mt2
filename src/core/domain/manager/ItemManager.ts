@@ -88,6 +88,11 @@ export default class ItemManager {
         await this.flush(itemToDatabase.ownerId);
     }
 
+    async save(item: Item) {
+        const id = await this.itemRepository.create(item.toDatabase());
+        item.setDbId(id);
+    }
+
     async flush(ownerId: number) {
         if (!this.itemCache.has(ownerId)) {
             return;

@@ -7,7 +7,10 @@ export default class BufferWriter {
         this.buffer[0] = header;
     }
 
-    getBuffer(): Buffer {
+    getBuffer(size?: number): Buffer {
+        if (size) {
+            return this.buffer.subarray(0, size);
+        }
         return this.buffer;
     }
 
@@ -46,6 +49,20 @@ export default class BufferWriter {
         this.buffer[fillEnd] = 0;
         this.lastPos += length;
 
+        return this;
+    }
+
+    writeStringFixed(value: string, length: number) {
+        const asciiBytes = Buffer.from(value, 'ascii').subarray(0, length);
+        asciiBytes.copy(this.buffer, this.lastPos);
+
+        const fillStart = this.lastPos + asciiBytes.length;
+        const fillEnd = this.lastPos + length;
+        if (fillEnd > fillStart) {
+            this.buffer.fill(0, fillStart, fillEnd);
+        }
+
+        this.lastPos += length;
         return this;
     }
 

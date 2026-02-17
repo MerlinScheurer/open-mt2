@@ -3,18 +3,27 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "module": "CommonJS",
-    "target": "ES6",
+    "target": "es2024",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": [
+        "*"
+      ]
     }
   },
-  "include": ["src", "test"],
+  "include": [
+    "src",
+    "test"
+  ],
   "exclude": [],
-  "types": ["node", "mocha"]
+  "types": [
+    "node",
+    "mocha"
+  ]
 }

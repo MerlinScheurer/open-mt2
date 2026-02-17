@@ -48,4 +48,9 @@ export default {
     ITEM_UPDATE: 0x19,
     INTERNAL_PING: 254,
     INTERNAL_PONG: 253,
+    ON_CLICK: 0x1a,
+    QUEST_SCRIPT: 0x2d,
+    QUEST_ANSWER: 0x1d,
+    QUEST_BUTTON: 0x42,
+    QUEST_INFO: 0x51,
 };

@@ -13,6 +13,7 @@ import { FlyEnum } from '@/core/enum/FlyEnum';
 import { StateMachine } from '@/core/util/StateMachine';
 import { PositionEnum } from '@/core/enum/PositionEnum';
 import { EmpireEnum } from '@/core/enum/EmpireEnum';
+import { QuestManager } from '../../quests/QuestManager';
 
 export default abstract class Character extends GameEntity {
     protected id: number;
@@ -38,7 +39,12 @@ export default abstract class Character extends GameEntity {
     protected readonly stateMachine: StateMachine = new StateMachine();
     protected pos: PositionEnum = PositionEnum.STANDING;
 
-    constructor({ id, classId, virtualId, entityType, positionX, positionY, name, empire }, { animationManager }) {
+    protected readonly questManager: QuestManager;
+
+    constructor(
+        { id, classId, virtualId, entityType, positionX, positionY, name, empire },
+        { animationManager, questManager },
+    ) {
         super({
             entityType,
             positionX,
@@ -51,6 +57,7 @@ export default abstract class Character extends GameEntity {
         this.empire = empire;
 
         this.animationManager = animationManager;
+        this.questManager = questManager;
     }
 
     abstract addPoint(point: PointsEnum, value: number): void;

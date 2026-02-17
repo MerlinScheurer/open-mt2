@@ -28,14 +28,14 @@ export default class Monster extends Mob {
 
     constructor(
         params: Omit<MobParams, 'virtualId' | 'entityType'>,
-        { animationManager, dropManager, experienceManager, logger },
+        { animationManager, dropManager, experienceManager, logger, questManager },
     ) {
         super(
             {
                 ...params,
                 entityType: EntityTypeEnum.MONSTER,
             },
-            { animationManager },
+            { animationManager, questManager },
         );
         this.dropManager = dropManager;
         this.experienceManager = experienceManager;
@@ -143,7 +143,7 @@ export default class Monster extends Mob {
 
     onDespawn(): void {
         this.eventTimerManager.clearAllTimers();
-        if (this.group.allDead()) {
+        if (this.group?.allDead()) {
             this.group.createRespawnEvent();
         }
     }
@@ -208,6 +208,7 @@ export default class Monster extends Mob {
         if (this.points.getPoint(PointsEnum.HEALTH) <= 0) {
             this.die();
             this.reward();
+            this.questManager.onKill(attacker, this);
             return;
         }
     }

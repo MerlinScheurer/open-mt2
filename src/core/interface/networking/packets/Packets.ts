@@ -37,6 +37,12 @@ import Packet from './packet/Packet';
 import PacketHandler from './packet/PacketHandler';
 import InternalPingPacket from './packet/in/internalPing/InternalPingPacket';
 import InternalPingPacketHandler from './packet/in/internalPing/InternalPingPacketHandler';
+import OnClickPacket from './packet/in/onclick/OnClickPacket';
+import OnClickPacketHandler from './packet/in/onclick/OnClickPacketHandler';
+import QuestAnswerPacket from './packet/in/questAnswer/QuestAnswerPacket';
+import QuestAnswerPacketHandler from './packet/in/questAnswer/QuestAnswerPacketHandler';
+import QuestButtonPacket from './packet/in/questButton/QuestButtonPacket';
+import QuestButtonPacketHandler from './packet/in/questButton/QuestButtonPacketHandler';
 
 export type PacketMapValue<T extends Packet> = {
     createPacket: (params?: any) => T;
@@ -168,6 +174,27 @@ const packets: Map<number, PacketMapValue<any>> = new Map<number, PacketMapValue
         {
             createPacket: (params = {}) => new InternalPingPacket(params),
             createHandler: (params) => new InternalPingPacketHandler(params),
+        },
+    ],
+    [
+        PacketHeaderEnum.ON_CLICK,
+        {
+            createPacket: (params = {}) => new OnClickPacket(params),
+            createHandler: (params) => new OnClickPacketHandler(params),
+        },
+    ],
+    [
+        PacketHeaderEnum.QUEST_ANSWER,
+        {
+            createPacket: (params = {}) => new QuestAnswerPacket(params),
+            createHandler: (params) => new QuestAnswerPacketHandler(params),
+        },
+    ],
+    [
+        PacketHeaderEnum.QUEST_BUTTON,
+        {
+            createPacket: (params = {}) => new QuestButtonPacket(params),
+            createHandler: (params) => new QuestButtonPacketHandler(params),
         },
     ],
 ]);

@@ -54094,7 +54094,7 @@
   },
   {
     "vnum": "9003",
-    "name": "???? ??",
+    "name": "Saleswoman",
     "rank": "KING",
     "type": "NPC",
     "battle_type": "MELEE",
@@ -77746,7 +77746,7 @@
   },
   {
     "vnum": "20016",
-    "name": "????",
+    "name": "blacksmith",
     "rank": "KING",
     "type": "NPC",
     "battle_type": "MELEE",

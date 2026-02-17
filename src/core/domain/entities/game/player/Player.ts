@@ -54,6 +54,10 @@ import { ConnectionStateEnum } from '@/core/enum/ConnectionStateEnum';
 import { Mob } from '../mob/Mob';
 import MathUtil from '@/core/domain/util/MathUtil';
 import SaveCharacterService from '@/game/domain/service/SaveCharacterService';
+import QuestScriptPacket from '@/core/interface/networking/packets/packet/out/QuestScriptPacket';
+import { AbstractQuest } from '@/core/domain/quests/AbstractQuest';
+import { QuestStatusEnum } from '@/core/domain/quests/decorators/QuestDecorator';
+import QuestInfoPacket from '@/core/interface/networking/packets/packet/out/QuestInfoPacket';
 
 const REGEN_INTERVAL = 3000;
 const MAX_DISTANCE_FROM_TARGET = 3500;
@@ -86,6 +90,10 @@ export default class Player extends Character {
 
     //pos
     private lastTimeInBattle: number = 0;
+
+    //quests
+    private readonly quests: Map<number, AbstractQuest> = new Map();
+    private currentQuest: AbstractQuest;
 
     constructor(
         {
@@ -128,7 +136,7 @@ export default class Player extends Character {
             baseAttackSpeed = 0,
             baseMovementSpeed = 0,
         },
-        { animationManager, experienceManager, config, logger, saveCharacterService },
+        { animationManager, experienceManager, config, logger, saveCharacterService, questManager },
     ) {
         super(
             {
@@ -143,6 +151,7 @@ export default class Player extends Character {
             },
             {
                 animationManager,
+                questManager,
             },
         );
         this.accountId = accountId;
@@ -210,7 +219,11 @@ export default class Player extends Character {
             .gotoState(EntityStateEnum.IDLE);
     }
 
-    onSpawn(): void {
+    levelUp() {
+        this.questManager.onLevelUp(this);
+    }
+
+    async onSpawn(): Promise<void> {
         this.init();
         this.lastPlayTime = performance.now();
 
@@ -235,6 +248,9 @@ export default class Player extends Character {
         });
 
         this.sendInventory();
+
+        await this.questManager.addQuests(this);
+        this.questManager.onLogin(this);
     }
 
     private applyInvisibleAffect(durationInSecs: number) {
@@ -440,6 +456,9 @@ export default class Player extends Character {
         if (this.points.getPoint(PointsEnum.HEALTH) <= 0) {
             // this.points.calcPointsAndResetValues();
             this.die(attacker);
+            if (attacker instanceof Player) {
+                this.questManager.onKill(attacker, this);
+            }
             return;
         }
     }
@@ -1216,6 +1235,86 @@ export default class Player extends Character {
         return poses.includes(this.getPos());
     }
 
+    //QUEST
+
+    sendQuestScript(skin: number, src: string) {
+        this.connection.send(
+            new QuestScriptPacket({
+                skin,
+                src,
+            }),
+        );
+    }
+
+    addQuest(id: number, quest: AbstractQuest) {
+        this.quests.set(id, quest);
+    }
+
+    getQuest(id: number): AbstractQuest {
+        return this.quests.get(id);
+    }
+
+    setCurrentQuest(quest: AbstractQuest) {
+        this.currentQuest = quest;
+    }
+
+    getCurrentQuest() {
+        return this.currentQuest;
+    }
+
+    isQuestRunning(): boolean {
+        const quest = this.getCurrentQuest();
+        return quest?.isRunning() ?? false;
+    }
+
+    getQuestByStatus(status: QuestStatusEnum) {
+        for (const quest of this.quests.values()) {
+            if (quest.getStatus() === status) {
+                return quest;
+            }
+        }
+    }
+
+    sendQuestInfoPacket({
+        id,
+        flags,
+        title,
+        wasStarted,
+        clockName,
+        clockValue,
+        counterName,
+        counterValue,
+        iconFile,
+    }: {
+        id: number;
+        flags: number;
+        wasStarted: number;
+        title: string;
+        clockName?: string;
+        clockValue?: number;
+        counterName?: string;
+        counterValue?: number;
+        iconFile?: string;
+    }) {
+        this.connection.send(
+            new QuestInfoPacket({
+                id,
+                flags,
+                title,
+                wasStarted,
+                clockName,
+                clockValue,
+                counterName,
+                counterValue,
+                iconFile,
+            }),
+        );
+    }
+
+    getArea() {
+        return this.area;
+    }
+
     static create(
         {
             id,
@@ -1257,7 +1356,7 @@ export default class Player extends Character {
             baseAttackSpeed,
             baseMovementSpeed,
         },
-        { animationManager, config, experienceManager, logger, saveCharacterService },
+        { animationManager, config, experienceManager, logger, saveCharacterService, questManager },
     ) {
         return new Player(
             {
@@ -1300,7 +1399,7 @@ export default class Player extends Character {
                 baseAttackSpeed,
                 baseMovementSpeed,
             },
-            { animationManager, config, experienceManager, logger, saveCharacterService },
+            { animationManager, config, experienceManager, logger, saveCharacterService, questManager },
         );
     }
 

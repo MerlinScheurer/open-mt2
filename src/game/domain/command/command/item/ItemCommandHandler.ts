@@ -39,8 +39,7 @@ export default class ItemCommandHandler extends CommandHandler<ItemCommand> {
 
         const item = this.itemManager.getItem(Number(vnum), Math.min(Number(quantity), MathUtil.MAX_TINY));
         if (player.addItem(item)) {
-            const id = await this.itemRepository.create(item.toDatabase());
-            item.setDbId(id);
+            await this.itemManager.save(item);
         }
     }
 }

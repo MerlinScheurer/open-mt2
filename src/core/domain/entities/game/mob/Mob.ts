@@ -105,7 +105,7 @@ export abstract class Mob extends Character {
     protected group: MonsterGroup;
     protected readonly points: MobPoints;
 
-    constructor(params: MobParams, { animationManager }) {
+    constructor(params: MobParams, { animationManager, questManager }) {
         super(
             {
                 id: Number(params.proto.vnum),
@@ -117,7 +117,7 @@ export abstract class Mob extends Character {
                 name: params.proto.name,
                 empire: Number(params.proto.empire),
             },
-            { animationManager },
+            { animationManager, questManager },
         );
         const proto = params.proto;
 

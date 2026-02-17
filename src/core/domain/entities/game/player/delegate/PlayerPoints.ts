@@ -953,6 +953,7 @@ export class PlayerPoints extends Points {
 
         //TODO: add skill point
         this.level += validatedValue;
+        this.player.levelUp();
     }
 
     private setLevel(value: number = 1) {
