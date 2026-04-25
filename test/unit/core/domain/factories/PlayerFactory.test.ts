@@ -10,6 +10,7 @@ describe('PlayerFactory', () => {
     let experienceManager;
     let logger;
     let saveCharacterService;
+    let questManager;
 
     beforeEach(() => {
         config = {
@@ -43,12 +44,14 @@ describe('PlayerFactory', () => {
             getNeededExperience: () => 100,
         };
         animationManager = {};
+        questManager = {};
         playerFactory = new PlayerFactory({
             config,
             animationManager,
             experienceManager,
             logger,
             saveCharacterService,
+            questManager,
         });
     });
 
