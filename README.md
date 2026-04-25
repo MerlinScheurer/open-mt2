@@ -118,6 +118,10 @@ In this implementation we are using custom commands, described bellow:
     - Description: add privilege to a empire, player or guild.
     - Example: /priv <player, empire, guild> <playerName, empireName, guildName> <exp, gold, drop, gold5, gold10, gold50> <value> <timeInSeconds>
     - Usage: /priv empire blue exp 100 1000 (add 100% od exp bonus to blue empire per 1000 seconds)
+- **/setblockmode**
+    - Description: set player interaction block modes (settings).
+    - Example: /setblockmode <number>
+    - Usage: /setblockmode 3 (sets Trade and Group to blocked)
 
 
 ## Auth Flow
