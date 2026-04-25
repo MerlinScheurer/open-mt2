@@ -73,6 +73,7 @@ export default class Player extends Character {
     private slot: number;
     private appearance: number;
     private lastPlayTime: number = performance.now();
+    private blockMode: number = 0;
 
     private readonly config: GameConfig;
     private readonly inventory: Inventory;
@@ -1461,5 +1462,24 @@ export default class Player extends Character {
     }
     getInventory() {
         return this.inventory;
+    }
+
+    sendBlockMode() {
+        const playerBlockModeChatPacket = new ChatOutPacket({
+            messageType: ChatMessageTypeEnum.COMMAND,
+            vid: this.getVirtualId(),
+            empireId: this.empire,
+            message: `setblockmode ${this.blockMode}`,
+        });
+
+        this.connection.send(playerBlockModeChatPacket);
+    }
+
+    setBlockMode(newMode: number) {
+        this.blockMode = newMode;
+    }
+
+    getBlockMode() {
+        return this.blockMode;
     }
 }
