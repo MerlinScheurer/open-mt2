@@ -3,14 +3,14 @@ import BlockModeCommand from '@/game/domain/command/command/blockMode/BlockModeC
 import Player from '@/core/domain/entities/game/player/Player';
 import CommandHandler from '../../CommandHandler';
 
-const BlockModes = {
-    Trade: 1,
-    Group: 2,
-    Guild: 4,
-    Whisper: 8,
-    Friends: 16,
-    Request: 32,
-};
+// const BlockModes = {
+//     Trade: 1,
+//     Group: 2,
+//     Guild: 4,
+//     Whisper: 8,
+//     Friends: 16,
+//     Request: 32,
+// };
 
 export default class BlockModeCommandHandler extends CommandHandler<BlockModeCommand> {
     private readonly logger: Logger;
