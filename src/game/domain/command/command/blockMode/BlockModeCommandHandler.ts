@@ -1,6 +1,5 @@
 import Logger from '@/core/infra/logger/Logger';
 import BlockModeCommand from '@/game/domain/command/command/blockMode/BlockModeCommand';
-import World from '@/core/domain/World';
 import Player from '@/core/domain/entities/game/player/Player';
 import CommandHandler from '../../CommandHandler';
 
@@ -14,13 +13,11 @@ const BlockModes = {
 };
 
 export default class BlockModeCommandHandler extends CommandHandler<BlockModeCommand> {
-    private logger: Logger;
-    private world: World;
+    private readonly logger: Logger;
 
-    constructor({ logger, world }) {
+    constructor({ logger }) {
         super();
         this.logger = logger;
-        this.world = world;
     }
 
     async execute(player: Player, blockModeCommand: BlockModeCommand) {
@@ -38,7 +35,6 @@ export default class BlockModeCommandHandler extends CommandHandler<BlockModeCom
         if (player) {
             player.setBlockMode(Number(mode));
             player.sendBlockMode();
-            return;
         }
     }
 }

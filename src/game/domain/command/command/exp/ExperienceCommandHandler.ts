@@ -7,8 +7,8 @@ import { ChatMessageTypeEnum } from '@/core/enum/ChatMessageTypeEnum';
 import { PointsEnum } from '@/core/enum/PointsEnum';
 
 export default class ExperienceCommandHandler extends CommandHandler<ExperienceCommand> {
-    private logger: Logger;
-    private world: World;
+    private readonly logger: Logger;
+    private readonly world: World;
 
     constructor({ logger, world }) {
         super();
