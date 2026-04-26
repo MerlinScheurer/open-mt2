@@ -58,6 +58,7 @@ import QuestScriptPacket from '@/core/interface/networking/packets/packet/out/Qu
 import { AbstractQuest } from '@/core/domain/quests/AbstractQuest';
 import { QuestStatusEnum } from '@/core/domain/quests/decorators/QuestDecorator';
 import QuestInfoPacket from '@/core/interface/networking/packets/packet/out/QuestInfoPacket';
+import { BlockFlagEnum } from '@/core/enum/BlockFlagEnum';
 
 const REGEN_INTERVAL = 3000;
 const MAX_DISTANCE_FROM_TARGET = 3500;
@@ -73,7 +74,7 @@ export default class Player extends Character {
     private slot: number;
     private appearance: number;
     private lastPlayTime: number = performance.now();
-    private blockMode: number = 0;
+    private blockMode: number = BlockFlagEnum.NONE;
 
     private readonly config: GameConfig;
     private readonly inventory: Inventory;
