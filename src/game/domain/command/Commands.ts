@@ -1,4 +1,6 @@
 import Command from './Command';
+import BlockModeCommand from './command/blockMode/BlockModeCommand';
+import BlockModeCommandHandler from './command/blockMode/BlockModeCommandHandler';
 import ExperienceCommand from './command/exp/ExperienceCommand';
 import ExperienceCommandHandler from './command/exp/ExperienceCommandHandler';
 import GoldCommand from './command/gold/GoldCommand';
@@ -139,6 +141,13 @@ export default () =>
             {
                 command: RestartTownCommand,
                 createHandler: () => new RestartTownCommandHandler(),
+            },
+        ],
+        [
+            BlockModeCommand.getName(),
+            {
+                command: BlockModeCommand,
+                createHandler: (params) => new BlockModeCommandHandler(params),
             },
         ],
     ]);
