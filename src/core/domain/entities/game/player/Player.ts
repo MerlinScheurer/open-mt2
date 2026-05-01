@@ -59,6 +59,7 @@ import { AbstractQuest } from '@/core/domain/quests/AbstractQuest';
 import { QuestStatusEnum } from '@/core/domain/quests/decorators/QuestDecorator';
 import QuestInfoPacket from '@/core/interface/networking/packets/packet/out/QuestInfoPacket';
 import { BlockFlagEnum } from '@/core/enum/BlockFlagEnum';
+import Shop from '@/core/domain/shop/Shop';
 
 const REGEN_INTERVAL = 3000;
 const MAX_DISTANCE_FROM_TARGET = 3500;
@@ -96,6 +97,9 @@ export default class Player extends Character {
     //quests
     private readonly quests: Map<number, AbstractQuest> = new Map();
     private currentQuest: AbstractQuest;
+
+    //shop
+    private currentShop: Shop | null = null;
 
     constructor(
         {
@@ -395,6 +399,10 @@ export default class Player extends Character {
     addPoint(point: PointsEnum, value: number) {
         this.points.addPoint(point, value);
         this.sendPoints(); //TODO: maybe we should send only the single point packet or just the points that have side effected.
+    }
+
+    send(packet: Parameters<GameConnection['send']>[0]) {
+        this.connection.send(packet);
     }
 
     setPoint(point: PointsEnum, value: number) {
@@ -1267,6 +1275,14 @@ export default class Player extends Character {
     isQuestRunning(): boolean {
         const quest = this.getCurrentQuest();
         return quest?.isRunning() ?? false;
+    }
+
+    getCurrentShop(): Shop | null {
+        return this.currentShop;
+    }
+
+    setCurrentShop(shop: Shop | null) {
+        this.currentShop = shop;
     }
 
     getQuestByStatus(status: QuestStatusEnum) {
