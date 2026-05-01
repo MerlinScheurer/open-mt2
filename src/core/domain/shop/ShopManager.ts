@@ -29,9 +29,7 @@ export default class ShopManager {
             entry.items.forEach(({ vnum, count }) => {
                 const item = this.itemManager.getItem(vnum, count);
                 if (!item) {
-                    this.logger.info(
-                        `[ShopManager] Unknown item vnum ${vnum} in shop for NPC ${entry.npcVnum}`,
-                    );
+                    this.logger.info(`[ShopManager] Unknown item vnum ${vnum} in shop for NPC ${entry.npcVnum}`);
                     return;
                 }
 

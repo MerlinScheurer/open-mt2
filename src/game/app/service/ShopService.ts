@@ -136,8 +136,6 @@ export default class ShopService {
 
         player.send(new ShopResultPacket({ result: ShopSubHeaderGC.OK }));
 
-        this.logger.info(
-            `[ShopService] Player ${player.getName()} sold pos=${pos} ×${sellCount} for ${sellPrice}g`,
-        );
+        this.logger.info(`[ShopService] Player ${player.getName()} sold pos=${pos} ×${sellCount} for ${sellPrice}g`);
     }
 }
