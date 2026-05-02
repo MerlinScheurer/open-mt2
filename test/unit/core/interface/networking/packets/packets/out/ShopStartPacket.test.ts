@@ -3,7 +3,6 @@ import ShopStartPacket from '@/core/interface/networking/packets/packet/out/Shop
 import PacketHeaderEnum from '@/core/enum/PacketHeaderEnum';
 import { ShopSubHeaderGC } from '@/core/enum/ShopSubHeaderEnum';
 import { ShopItem } from '@/core/domain/shop/ShopItem';
-import BufferReader from '@/core/interface/networking/buffer/BufferReader';
 
 describe('ShopStartPacket', () => {
     let packet: ShopStartPacket;
