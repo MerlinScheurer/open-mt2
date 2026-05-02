@@ -21,15 +21,6 @@ const BONUSES_COUNT = 7;
 const ITEM_BYTES = 4 + 4 + 1 + 1 + SOCKETS_COUNT * 4 + BONUSES_COUNT * 3; // 43
 const PACKET_SIZE = 1 + 2 + 1 + 4 + SHOP_MAX_ITEMS * ITEM_BYTES; // 1728
 
-class ItemBonus {
-    public id: number;
-    public value: number;
-    constructor({ id = 0, value = 0 }) {
-        this.id = id;
-        this.value = value;
-    }
-}
-
 export default class ShopStartPacket extends PacketOut {
     private readonly ownerVid: number;
     private readonly items: ShopItem[];

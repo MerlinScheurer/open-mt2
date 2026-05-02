@@ -11,8 +11,6 @@ import ShopStartPacket from '@/core/interface/networking/packets/packet/out/Shop
 import ShopEndPacket from '@/core/interface/networking/packets/packet/out/ShopEndPacket';
 import ShopResultPacket from '@/core/interface/networking/packets/packet/out/ShopResultPacket';
 
-const MAX_SHOP_DISTANCE = 1000;
-
 export default class ShopService {
     private readonly shopManager: ShopManager;
     private readonly itemManager: ItemManager;
